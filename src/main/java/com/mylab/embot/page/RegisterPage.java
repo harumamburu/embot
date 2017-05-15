@@ -1,5 +1,6 @@
 package com.mylab.embot.page;
 
+import com.mylab.embot.driver.Driver;
 import com.mylab.embot.page.element.VisitorForm;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.FindBy;
@@ -29,7 +30,7 @@ public class RegisterPage extends Page {
     private final int numberOfVisitors;
     private List<VisitorForm> visitorForms;
 
-    public RegisterPage(WebDriver driver, int numberOfVisitors) {
+    public RegisterPage(Driver driver, int numberOfVisitors) {
         super(driver);
         this.numberOfVisitors = numberOfVisitors;
     }

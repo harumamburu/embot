@@ -1,14 +1,14 @@
 package com.mylab.embot.page;
 
-import org.openqa.selenium.WebDriver;
+import com.mylab.embot.driver.Driver;
 import org.openqa.selenium.support.PageFactory;
 import ru.yandex.qatools.htmlelements.loader.decorator.HtmlElementDecorator;
 
 public abstract class Page {
 
-    protected final WebDriver driver;
+    protected final Driver driver;
 
-    public Page(WebDriver driver) {
+    public Page(Driver driver) {
         PageFactory.initElements(new HtmlElementDecorator(driver), this);
         this.driver = driver;
     }
