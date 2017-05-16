@@ -1,0 +1,34 @@
+package com.mylab.embot.scenario;
+
+import com.mylab.embot.driver.Driver;
+import com.mylab.embot.entity.User;
+import com.mylab.embot.page.MainPage;
+import com.mylab.embot.page.RegisterPage;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+
+import java.util.Set;
+
+public class RegistrationScenarion implements Scenario {
+
+    @Autowired
+    private Driver<ChromeDriver> driver;
+
+    @Value("scenario.entrypoint.address")
+    private String mainPageAddress;
+
+    private Set<User> users;
+
+    public RegistrationScenarion(Set<User> users) {
+        this.users = users;
+    }
+
+    @Override
+    public void run() {
+        driver.get(mainPageAddress);
+
+        RegisterPage page = new MainPage(driver).register().proceedToRegistration(users.size());
+
+    }
+}
