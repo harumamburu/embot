@@ -1,6 +1,6 @@
 package com.mylab.embot.scenario;
 
-import com.mylab.embot.driver.Driver;
+import com.mylab.embot.driver.CustomChromeDriver;
 import com.mylab.embot.entity.User;
 import com.mylab.embot.page.MainPage;
 import com.mylab.embot.page.RegisterPage;
@@ -13,7 +13,7 @@ import java.util.Set;
 public class RegistrationScenario implements Scenario {
 
     @Autowired
-    private Driver<ChromeDriver> driver;
+    private CustomChromeDriver driver;
 
     @Value("scenario.entrypoint.address")
     private String mainPageAddress;

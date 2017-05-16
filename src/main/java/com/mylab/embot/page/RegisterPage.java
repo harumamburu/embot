@@ -1,6 +1,6 @@
 package com.mylab.embot.page;
 
-import com.mylab.embot.driver.Driver;
+import com.mylab.embot.driver.CustomChromeDriver;
 import com.mylab.embot.entity.User;
 import com.mylab.embot.page.element.Calendar;
 import com.mylab.embot.page.element.VisitorForm;
@@ -40,7 +40,7 @@ public class RegisterPage extends Page {
     @Value("page.registerpage.lovator.visitorform.pattern")
     private String visitorFormLoactorPattern;
 
-    public RegisterPage(Driver driver) {
+    public RegisterPage(CustomChromeDriver driver) {
         super(driver);
     }
 

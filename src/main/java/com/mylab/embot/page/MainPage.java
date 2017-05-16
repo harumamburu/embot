@@ -1,6 +1,6 @@
 package com.mylab.embot.page;
 
-import com.mylab.embot.driver.Driver;
+import com.mylab.embot.driver.CustomChromeDriver;
 import org.openqa.selenium.support.FindBy;
 import ru.yandex.qatools.htmlelements.element.Link;
 
@@ -9,7 +9,7 @@ public class MainPage extends Page {
     @FindBy(xpath = "//a[contains(@href, 'visit')]")
     private Link preRegistrationPageLink;
 
-    public MainPage(Driver driver) {
+    public MainPage(CustomChromeDriver driver) {
         super(driver);
     }
 

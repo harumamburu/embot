@@ -1,27 +1,27 @@
 package com.mylab.embot.driver;
 
-import org.openqa.selenium.TimeoutException;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.remote.RemoteWebDriver;
+import org.openqa.selenium.*;
+import org.openqa.selenium.chrome.*;
 import org.springframework.beans.factory.annotation.Value;
 
 import javax.annotation.PreDestroy;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
-public class Driver<T extends WebDriver> extends RemoteWebDriver {
-
-    private final T driver;
+public class CustomChromeDriver extends ChromeDriver {
 
     @Value("${driver.reload.attempts:3}")
     private int attemptsToLoad;
 
-    public Driver(T driver) {
-        this.driver = driver;
+    public CustomChromeDriver() {
     }
 
-    public T getWrappedDriver() {
-        return driver;
+    public CustomChromeDriver(Capabilities capabilities) {
+        super(capabilities);
+    }
+
+    public CustomChromeDriver(ChromeOptions options) {
+        super(options);
     }
 
     @Override
@@ -33,7 +33,7 @@ public class Driver<T extends WebDriver> extends RemoteWebDriver {
     private Optional<Throwable> get(String url, int attempt) {
         while (attempt <= attemptsToLoad) {
             try {
-                driver.get(url);
+                super.get(url);
                 return Optional.empty();
             } catch (Exception e) {
                 if (attempt == attemptsToLoad) {
@@ -44,19 +44,19 @@ public class Driver<T extends WebDriver> extends RemoteWebDriver {
             }
         }
         return Optional.of(new TimeoutException(
-                String.format("Wasn't able to load %s in %d attempts", url, attemptsToLoad)));
+                String.format("Wasn't able to load {%s} in %d attempts", url, attemptsToLoad)));
     }
 
     public void setPageLoadTimeout(long value, TimeUnit timeUnit) {
-        driver.manage().timeouts().pageLoadTimeout(value, timeUnit);
+        manage().timeouts().pageLoadTimeout(value, timeUnit);
     }
 
     public void setImplicitWait(long value, TimeUnit timeUnit) {
-        driver.manage().timeouts().implicitlyWait(value, timeUnit);
+        manage().timeouts().implicitlyWait(value, timeUnit);
     }
 
     @PreDestroy
-    public void quit() {
-        driver.quit();
+    public void shutDown() {
+        quit();
     }
 }
