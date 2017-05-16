@@ -28,7 +28,11 @@ public class RegistrationScenario implements Scenario {
     public void run() {
         driver.get(mainPageAddress);
 
-        RegisterPage page = new MainPage(driver).register().proceedToRegistration(users.size());
+        RegisterPage page = new MainPage(driver).register().proceedToRegistration();
+        if (page.checkSlots(users.size())) {
+            page.registerVisitors(users);
+        } else {
 
+        }
     }
 }
