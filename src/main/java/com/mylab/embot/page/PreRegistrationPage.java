@@ -13,8 +13,8 @@ public class PreRegistrationPage extends Page {
         super(driver);
     }
 
-    public RegisterPage proceedToRegistration(int numberOfVisitors) {
+    public RegisterPage proceedToRegistration() {
         registrationPageLink.click();
-        return new RegisterPage(driver, numberOfVisitors);
+        return new RegisterPage(driver);
     }
 }
