@@ -11,7 +11,7 @@
     <dependencies>
         <dependency>
             <groupId>org.springframework</groupId>
-            <artifactId>spring-beans</artifactId>
+            <artifactId>spring-context</artifactId>
             <version>4.3.8.RELEASE</version>
         </dependency>
         <dependency>
@@ -22,7 +22,7 @@
         <dependency>
             <groupId>ru.yandex.qatools.htmlelements</groupId>
             <artifactId>htmlelements-java</artifactId>
-            <version>1.8</version>
+            <version>1.17</version>
             <exclusions>
                 <exclusion>
                     <groupId>org.seleniumhq.selenium</groupId>
@@ -39,7 +39,7 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
                     <source>1.8</source>
-                    <target>1.17</target>
+                    <target>1.8</target>
                 </configuration>
             </plugin>
         </plugins>
