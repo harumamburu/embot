@@ -39,6 +39,6 @@ public class VisitorForm extends HtmlElement {
         Optional.ofNullable(user.getPhoneNumber()).ifPresent(number -> phoneInput.sendKeys(number));
         emailInput.sendKeys(user.getName());
         passId.sendKeys(user.getName());
-        representationSelect.selectByIndex(user.getRepresentation().getValueIndex());
+        representationSelect.selectByValue(String.valueOf(user.getRepresentation().getValueIndex()));
     }
 }

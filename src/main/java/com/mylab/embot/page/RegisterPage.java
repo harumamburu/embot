@@ -45,9 +45,10 @@ public class RegisterPage extends Page {
     }
 
     public void fillInEmbInfo(int numberOfVisitors) {
-        visitPurposeSelect.selectByIndex(6);
-        embSelect.selectByIndex(3);
-        numberOfVisitorsSelect.selectByIndex(numberOfVisitors);
+        // TODO replace with autowired properties
+        visitPurposeSelect.selectByValue(String.valueOf(6));
+        embSelect.selectByValue(String.valueOf(3));
+        numberOfVisitorsSelect.selectByValue(String.valueOf(numberOfVisitors));
     }
 
     public boolean checkSlots(int numberOfVisitors) {
@@ -66,7 +67,7 @@ public class RegisterPage extends Page {
 
         calendar.chooseAvailableDay();
         calendar.getAvailableDayText();
-        timeRadio.selectByIndex(16);
+        timeRadio.selectByValue(String.valueOf(16));
 
         for (int i = 0; i < visitors.size(); i++) {
             VisitorForm visitorForm = new VisitorForm(
