@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Value;
 
 import java.util.Set;
 
-public class RegistrationScenarion implements Scenario {
+public class RegistrationScenario implements Scenario {
 
     @Autowired
     private Driver<ChromeDriver> driver;
@@ -20,7 +20,7 @@ public class RegistrationScenarion implements Scenario {
 
     private Set<User> users;
 
-    public RegistrationScenarion(Set<User> users) {
+    public RegistrationScenario(Set<User> users) {
         this.users = users;
     }
 
