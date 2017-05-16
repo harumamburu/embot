@@ -11,7 +11,7 @@ import java.util.concurrent.TimeUnit;
 
 public class Driver<T extends WebDriver> extends RemoteWebDriver {
 
-    private T driver;
+    private final T driver;
 
     @Value("${driver.reload.attempts:3}")
     private int attemptsToLoad;
@@ -27,9 +27,7 @@ public class Driver<T extends WebDriver> extends RemoteWebDriver {
     @Override
     public void get(String url) {
         Optional<Throwable> result = get(url, 1);
-        if (result.isPresent()) {
-            throw new RuntimeException(result.get());
-        }
+        result.ifPresent(throwable -> { throw new RuntimeException(throwable); });
     }
 
     private Optional<Throwable> get(String url, int attempt) {

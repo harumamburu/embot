@@ -4,11 +4,11 @@ import com.mylab.embot.driver.Driver;
 import org.openqa.selenium.support.PageFactory;
 import ru.yandex.qatools.htmlelements.loader.decorator.HtmlElementDecorator;
 
-public abstract class Page {
+abstract class Page {
 
-    protected final Driver driver;
+    final Driver driver;
 
-    public Page(Driver driver) {
+    Page(Driver driver) {
         PageFactory.initElements(new HtmlElementDecorator(driver), this);
         this.driver = driver;
     }

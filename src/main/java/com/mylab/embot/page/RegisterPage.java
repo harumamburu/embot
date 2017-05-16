@@ -2,7 +2,6 @@ package com.mylab.embot.page;
 
 import com.mylab.embot.driver.Driver;
 import com.mylab.embot.page.element.VisitorForm;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.FindBy;
 import ru.yandex.qatools.htmlelements.element.HtmlElement;
 import ru.yandex.qatools.htmlelements.element.Select;
