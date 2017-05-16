@@ -1,9 +1,13 @@
 package com.mylab.embot.page.element;
 
+import com.mylab.embot.entity.User;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import ru.yandex.qatools.htmlelements.element.HtmlElement;
 import ru.yandex.qatools.htmlelements.element.Select;
 import ru.yandex.qatools.htmlelements.element.TextInput;
+
+import java.util.Optional;
 
 public class VisitorForm extends HtmlElement {
 
@@ -24,4 +28,17 @@ public class VisitorForm extends HtmlElement {
 
     @FindBy(xpath = "//select[contains(@id, 'representation')]")
     private Select representationSelect;
+
+    public VisitorForm(WebElement wrappedElement) {
+        setWrappedElement(wrappedElement);
+    }
+
+    public void fillInUserInfo(User user) {
+        nameInput.sendKeys(user.getName());
+        lastnameInput.sendKeys(user.getLastName());
+        Optional.ofNullable(user.getPhoneNumber()).ifPresent(number -> phoneInput.sendKeys(number));
+        emailInput.sendKeys(user.getName());
+        passId.sendKeys(user.getName());
+        representationSelect.selectByIndex(user.getRepresentation().getValueIndex());
+    }
 }
