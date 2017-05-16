@@ -4,7 +4,7 @@ public enum Representation {
 
     IN_PERSON(1),
     PARENTS(2),
-    REPRESENTATIVE(3);
+    REPRESENTATIVE(4);
 
     private final int valueIndex;
 
