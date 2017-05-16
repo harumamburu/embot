@@ -13,7 +13,7 @@ public class Driver<T extends WebDriver> extends RemoteWebDriver {
 
     private T driver;
 
-    @Value("${page.load.attempts:3}")
+    @Value("${driver.reload.attempts:3}")
     private int attemptsToLoad;
 
     public Driver(T driver) {
