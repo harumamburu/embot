@@ -7,8 +7,12 @@ import com.mylab.embot.page.element.VisitorForm;
 import com.mylab.embot.page.frame.CaptchaFrame;
 import org.openqa.selenium.support.FindBy;
 import org.springframework.beans.factory.annotation.Value;
-import ru.yandex.qatools.htmlelements.element.*;
+import ru.yandex.qatools.htmlelements.element.Button;
+import ru.yandex.qatools.htmlelements.element.Radio;
+import ru.yandex.qatools.htmlelements.element.Select;
+import ru.yandex.qatools.htmlelements.element.TextInput;
 
+import java.util.List;
 import java.util.Set;
 
 public class RegisterPage extends Page {
@@ -37,8 +41,7 @@ public class RegisterPage extends Page {
     @FindBy(xpath = "//button[contains(@id, 'visit_submit')]")
     private Button registerButton;
 
-    @Value("page.registerpage.lovator.visitorform.pattern")
-    private String visitorFormLoactorPattern;
+    private List<VisitorForm> visitorForms;
 
     public RegisterPage(CustomChromeDriver driver) {
         super(driver);
@@ -70,9 +73,7 @@ public class RegisterPage extends Page {
         timeRadio.selectByValue(String.valueOf(16));
 
         for (int i = 0; i < visitors.size(); i++) {
-            VisitorForm visitorForm = new VisitorForm(
-                    driver.findElementByXPath(String.format(visitorFormLoactorPattern, i)));
-            visitorForm.fillInUserInfo(visitors.iterator().next());
+            visitorForms.get(i).fillInUserInfo(visitors.iterator().next());
         }
 
         driver.switchTo().frame(capchaFrame);
