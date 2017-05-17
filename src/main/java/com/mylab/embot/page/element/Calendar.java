@@ -4,20 +4,15 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.springframework.beans.factory.annotation.Value;
 import ru.yandex.qatools.htmlelements.element.Button;
 import ru.yandex.qatools.htmlelements.element.HtmlElement;
 
-import java.util.Optional;
-
 public class Calendar extends HtmlElement {
-
-    @Value("element.calendar.locator://td[not(contains(@class, 'unselectable'))]")
-    private String openDayLocator;
 
     @FindBy(className = "ui-datepicker-next")
     private Button nextMonthButton;
 
+    @FindBy(xpath = "//td[not(contains(@class, 'unselectable'))]")
     private Button openDayButton;
 
     public boolean chooseAvailableDay() {
@@ -36,16 +31,11 @@ public class Calendar extends HtmlElement {
     }
 
     public boolean isSlotAvailable() {
-        if (openDayButton == null) {
-            Optional.ofNullable(
-                    Optional.ofNullable(findElement(By.xpath(openDayLocator)))
-                            .orElseGet(() -> {
-                                nextMonthButton.click();
-                                return findElement(By.xpath(openDayLocator));
-                            }))
-                    .ifPresent(webElement -> openDayButton = new Button(webElement));
+        if (!openDayButton.exists()) {
+            nextMonthButton.click();
+            return openDayButton.exists();
         }
-        return openDayButton == null;
+        return true;
     }
 
     @Override
