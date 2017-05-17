@@ -1,7 +1,8 @@
 package com.mylab.embot.driver;
 
-import org.openqa.selenium.*;
-import org.openqa.selenium.chrome.*;
+import org.openqa.selenium.Capabilities;
+import org.openqa.selenium.TimeoutException;
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.springframework.beans.factory.annotation.Value;
 
 import javax.annotation.PreDestroy;

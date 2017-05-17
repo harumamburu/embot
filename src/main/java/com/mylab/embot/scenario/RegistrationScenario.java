@@ -4,7 +4,6 @@ import com.mylab.embot.driver.CustomChromeDriver;
 import com.mylab.embot.entity.User;
 import com.mylab.embot.page.MainPage;
 import com.mylab.embot.page.RegisterPage;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 
