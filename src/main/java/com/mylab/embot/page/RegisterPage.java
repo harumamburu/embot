@@ -77,13 +77,9 @@ public class RegisterPage extends Page {
         return calendar.getAvailableDayText();
     }
 
-    public void registerVisitors(Set<Visitor> visitors) {
+    public void fillInVisitorsInfo(Set<Visitor> visitors) {
         fillInEmbInfo(visitors.size());
         dateInput.getWrappedElement().click();
-
-        if (!calendar.isSlotAvailable()) {
-            return;
-        }
 
         calendar.chooseAvailableDay();
         calendar.getAvailableDayText();
@@ -93,6 +89,9 @@ public class RegisterPage extends Page {
             visitorForms.get(i).fillInUserInfo(visitors.iterator().next());
         }
 
+    }
+
+    public void confirmRegistration() {
         driver.switchTo().frame(capchaFrame);
         notRobotCheckBox.select();
         driver.switchTo().defaultContent();

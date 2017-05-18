@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Value;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
 public class RegistrationScenario implements Scenario {
 
@@ -29,6 +30,9 @@ public class RegistrationScenario implements Scenario {
 
     @Value("scenario.entrypoint.address")
     private String mainPageAddress;
+
+    @Value("${scenario.response.timeout}")
+    private long waitSecondsForResponce;
 
     private final Set<Visitor> visitors;
 
@@ -47,7 +51,8 @@ public class RegistrationScenario implements Scenario {
             if(slotsDay != null) {
                 skypeClient.sendGroupNotification(slotsTopic, "Slots available for " + slotsDay + "!!");
                 LOGGER.info("Found slots!! Registering visitors");
-                page.registerVisitors(visitors);
+                page.fillInVisitorsInfo(visitors);
+                page.confirmRegistration();
             } else {
                 LOGGER.info("Didn't find any slots...");
             }
@@ -59,6 +64,12 @@ public class RegistrationScenario implements Scenario {
     @PostConstruct
     public void connectSkype() {
         skypeClient.connectSkype();
+    }
+
+    @PostConstruct
+    public void setDriverWaits() {
+        driver.setImplicitWait(10, TimeUnit.SECONDS);
+        driver.setPageLoadTimeout(10, TimeUnit.SECONDS);
     }
 
     @PreDestroy
