@@ -17,10 +17,10 @@ public class RegistrationScenario implements Scenario {
     @Value("scenario.entrypoint.address")
     private String mainPageAddress;
 
-    private Set<User> users;
+    private Set<User> visitors;
 
-    public RegistrationScenario(Set<User> users) {
-        this.users = users;
+    public RegistrationScenario(Set<User> visitors) {
+        this.visitors = visitors;
     }
 
     @Override
@@ -28,8 +28,10 @@ public class RegistrationScenario implements Scenario {
         driver.get(mainPageAddress);
 
         RegisterPage page = new MainPage(driver).register().proceedToRegistration();
-        if (page.checkSlots(users.size())) {
-            page.registerVisitors(users);
+
+        String slotsDay = page.getAvailableSlotDay(visitors.size());
+        if(slotsDay != null) {
+            page.registerVisitors(visitors);
         } else {
 
         }

@@ -41,21 +41,31 @@ public class RegisterPage extends Page {
 
     private List<VisitorForm> visitorForms;
 
+    private boolean filledIn;
+
     public RegisterPage(CustomChromeDriver driver) {
         super(driver);
     }
 
     public void fillInEmbInfo(int numberOfVisitors) {
         // TODO replace with autowired properties
-        visitPurposeSelect.selectByValue(String.valueOf(6));
-        embSelect.selectByValue(String.valueOf(3));
-        numberOfVisitorsSelect.selectByValue(String.valueOf(numberOfVisitors));
+        if (!filledIn) {
+            visitPurposeSelect.selectByValue(String.valueOf(6));
+            embSelect.selectByValue(String.valueOf(3));
+            numberOfVisitorsSelect.selectByValue(String.valueOf(numberOfVisitors));
+            filledIn = true;
+        }
     }
 
-    public boolean checkSlots(int numberOfVisitors) {
+    /**
+     * Check if there are slots available and return first available day if there are, null otherwise
+     * @param numberOfVisitors
+     * @return available slot day or null
+     */
+    public String getAvailableSlotDay(int numberOfVisitors) {
         fillInEmbInfo(numberOfVisitors);
         dateInput.getWrappedElement().click();
-        return calendar.isSlotAvailable();
+        return calendar.getAvailableDayText();
     }
 
     public void registerVisitors(Set<User> visitors) {
