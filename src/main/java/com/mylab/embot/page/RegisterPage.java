@@ -5,6 +5,7 @@ import com.mylab.embot.entity.Visitor;
 import com.mylab.embot.page.element.Calendar;
 import com.mylab.embot.page.element.VisitorForm;
 import org.openqa.selenium.support.FindBy;
+import org.springframework.beans.factory.annotation.Value;
 import ru.yandex.qatools.htmlelements.element.*;
 
 import java.util.List;
@@ -41,6 +42,15 @@ public class RegisterPage extends Page {
 
     private List<VisitorForm> visitorForms;
 
+    @Value("@{scenario.registerpage.select.purpose.value:6}")
+    private String visitPurposeSelectValue;
+
+    @Value("@{scenario.registerpage.select.emb.value:3}")
+    private String embSelectValue;
+
+    @Value("@{scenario.registerpage.select.time.value:16}")
+    private String timeSelectValue;
+
     private boolean filledIn;
 
     public RegisterPage(CustomChromeDriver driver) {
@@ -48,10 +58,9 @@ public class RegisterPage extends Page {
     }
 
     private void fillInEmbInfo(int numberOfVisitors) {
-        // TODO replace with autowired properties
         if (!filledIn) {
-            visitPurposeSelect.selectByValue(String.valueOf(6));
-            embSelect.selectByValue(String.valueOf(3));
+            visitPurposeSelect.selectByValue(visitPurposeSelectValue);
+            embSelect.selectByValue(embSelectValue);
             numberOfVisitorsSelect.selectByValue(String.valueOf(numberOfVisitors));
             filledIn = true;
         }
@@ -78,7 +87,7 @@ public class RegisterPage extends Page {
 
         calendar.chooseAvailableDay();
         calendar.getAvailableDayText();
-        timeRadio.selectByValue(String.valueOf(16));
+        timeRadio.selectByValue(timeSelectValue);
 
         for (int i = 0; i < visitors.size(); i++) {
             visitorForms.get(i).fillInUserInfo(visitors.iterator().next());
