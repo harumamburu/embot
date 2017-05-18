@@ -3,10 +3,7 @@ package com.mylab.embot.skype;
 import fr.delthas.skype.Group;
 import fr.delthas.skype.Presence;
 import fr.delthas.skype.Skype;
-import org.springframework.beans.factory.annotation.Value;
 
-import javax.annotation.PostConstruct;
-import javax.annotation.PreDestroy;
 import java.io.IOException;
 
 public class SkypeClient {
@@ -17,7 +14,6 @@ public class SkypeClient {
         skype = new Skype(username, password);
     }
 
-    @PostConstruct
     public void connectSkype() {
         try {
             skype.connect(Presence.HIDDEN);
@@ -33,7 +29,6 @@ public class SkypeClient {
         notifGroup.sendMessage(notification);
     }
 
-    @PreDestroy
     public void disconnectSkype() {
         skype.disconnect();
     }

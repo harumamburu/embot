@@ -8,6 +8,8 @@ import com.mylab.embot.skype.SkypeClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 import java.util.Set;
 
 public class RegistrationScenario implements Scenario {
@@ -43,5 +45,17 @@ public class RegistrationScenario implements Scenario {
         } else {
 
         }
+    }
+
+
+
+    @PostConstruct
+    public void connectSkype() {
+        skypeClient.connectSkype();
+    }
+
+    @PreDestroy
+    public void disconnectSkype() {
+        skypeClient.disconnectSkype();
     }
 }
