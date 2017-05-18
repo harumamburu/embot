@@ -33,7 +33,7 @@ public class VisitorForm extends HtmlElement {
         nameInput.sendKeys(user.getName());
         lastnameInput.sendKeys(user.getLastName());
         Optional.ofNullable(user.getPhoneNumber()).ifPresent(number -> phoneInput.sendKeys(number));
-        emailInput.sendKeys(user.getName());
+        emailInput.sendKeys(user.getEmail());
         passId.sendKeys(user.getPassId());
         representationSelect.selectByValue(String.valueOf(user.getRepresentation().getValueIndex()));
     }
