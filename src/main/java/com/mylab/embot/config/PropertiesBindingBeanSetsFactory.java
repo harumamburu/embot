@@ -16,7 +16,6 @@ public class PropertiesBindingBeanSetsFactory<T> implements FactoryBean<Set<T>> 
     private String propertyPrefix;
     private Class<T> targetType;
     private Properties properties;
-    private Set<T> loadedBeans;
 
     @Override
     public Class<?> getObjectType() {
@@ -55,7 +54,7 @@ public class PropertiesBindingBeanSetsFactory<T> implements FactoryBean<Set<T>> 
 
     @Override
     public Set<T> getObject() throws Exception {
-        loadedBeans = new HashSet<>();
+        Set<T> loadedBeans = new HashSet<>();
         int lastIndex = -1;
 
         T item = null;

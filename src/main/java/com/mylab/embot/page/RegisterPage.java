@@ -47,7 +47,7 @@ public class RegisterPage extends Page {
         super(driver);
     }
 
-    public void fillInEmbInfo(int numberOfVisitors) {
+    private void fillInEmbInfo(int numberOfVisitors) {
         // TODO replace with autowired properties
         if (!filledIn) {
             visitPurposeSelect.selectByValue(String.valueOf(6));

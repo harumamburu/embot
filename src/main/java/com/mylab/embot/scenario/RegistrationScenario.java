@@ -26,7 +26,7 @@ public class RegistrationScenario implements Scenario {
     @Value("scenario.entrypoint.address")
     private String mainPageAddress;
 
-    private Set<Visitor> visitors;
+    private final Set<Visitor> visitors;
 
     public RegistrationScenario(Set<Visitor> visitors) {
         this.visitors = visitors;

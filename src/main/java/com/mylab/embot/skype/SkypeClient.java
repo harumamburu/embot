@@ -23,10 +23,10 @@ public class SkypeClient {
     }
 
     public void sendGroupNotification(String groupName, String notification) {
-        Group notifGroup = skype.getGroups().stream()
+        skype.getGroups().stream()
                 .filter(group -> group.getTopic().equals(groupName))
-                .findFirst().get();
-        notifGroup.sendMessage(notification);
+                .findFirst()
+                .ifPresent(group -> group.sendMessage(notification));
     }
 
     public void disconnectSkype() {
