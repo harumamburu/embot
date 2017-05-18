@@ -1,7 +1,6 @@
 package com.mylab.embot.driver;
 
-import org.openqa.selenium.Capabilities;
-import org.openqa.selenium.TimeoutException;
+import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.springframework.beans.factory.annotation.Value;
 
@@ -13,6 +12,9 @@ public class CustomChromeDriver extends ChromeDriver {
 
     @Value("${driver.reload.attempts:3}")
     private int attemptsToLoad;
+
+    @Value("${driver.chrome.emptypage.address:chrome://newtab}")
+    private String emptyPageAddress;
 
     public CustomChromeDriver() {
     }
@@ -29,6 +31,10 @@ public class CustomChromeDriver extends ChromeDriver {
     public void get(String url) {
         Optional<Throwable> result = get(url, 1);
         result.ifPresent(throwable -> { throw new RuntimeException(throwable); });
+    }
+
+    public void navigateToEmptyPage() {
+        navigate().to(emptyPageAddress);
     }
 
     private Optional<Throwable> get(String url, int attempt) {
