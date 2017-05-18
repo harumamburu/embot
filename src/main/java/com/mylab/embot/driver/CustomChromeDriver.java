@@ -59,7 +59,7 @@ public class CustomChromeDriver extends ChromeDriver {
         return findElement(by, 1);
     }
 
-    public WebElement findElement(By by, int attempt) {
+    private WebElement findElement(By by, int attempt) {
         while (attempt <= attemptsToLoad) {
             try {
                 return super.findElement(by);
