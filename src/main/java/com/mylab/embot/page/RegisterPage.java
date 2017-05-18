@@ -4,13 +4,8 @@ import com.mylab.embot.driver.CustomChromeDriver;
 import com.mylab.embot.entity.User;
 import com.mylab.embot.page.element.Calendar;
 import com.mylab.embot.page.element.VisitorForm;
-import com.mylab.embot.page.frame.CaptchaFrame;
 import org.openqa.selenium.support.FindBy;
-import org.springframework.beans.factory.annotation.Value;
-import ru.yandex.qatools.htmlelements.element.Button;
-import ru.yandex.qatools.htmlelements.element.Radio;
-import ru.yandex.qatools.htmlelements.element.Select;
-import ru.yandex.qatools.htmlelements.element.TextInput;
+import ru.yandex.qatools.htmlelements.element.*;
 
 import java.util.List;
 import java.util.Set;
@@ -36,7 +31,10 @@ public class RegisterPage extends Page {
     private Radio timeRadio;
 
     @FindBy(xpath = "//iframe[@name='undefined']")
-    private CaptchaFrame capchaFrame;
+    private HtmlElement capchaFrame;
+
+    @FindBy(className = "recaptcha-checkbox-checkmark")
+    private CheckBox notRobotCheckBox;
 
     @FindBy(xpath = "//button[contains(@id, 'visit_submit')]")
     private Button registerButton;
@@ -77,7 +75,7 @@ public class RegisterPage extends Page {
         }
 
         driver.switchTo().frame(capchaFrame);
-        capchaFrame.proveHumaneness();
+        notRobotCheckBox.select();
         driver.switchTo().defaultContent();
 
         registerButton.click();
