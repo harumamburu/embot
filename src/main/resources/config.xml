@@ -20,6 +20,6 @@
           c:username="${skype.credentials.username}"
           c:password="${skype.credentials.password}"/>
 
-    <bean id="main" class="com.mylab.embot.Main"/>
+    <bean id="registrationScenario" class="com.mylab.embot.scenario.RegistrationScenario" c:visitors-ref="visitors"/>
 
 </beans>

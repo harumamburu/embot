@@ -13,6 +13,7 @@
             <list>
                 <value>classpath:properties/driver.properties</value>
                 <value>classpath:properties/scenario.properties</value>
+                <value>classpath:properties/skype.properties</value>
             </list>
         </property>
     </bean>
@@ -27,13 +28,13 @@
         </property>
     </bean>
 
-    <bean id="visitorsFactory" class="com.mylab.embot.config.PropertiesBindingBeanSetsFactory">
-        <property name="propertyPrefix" value="visitor" />
+    <bean id="visitors" class="com.mylab.embot.config.PropertiesBindingBeanSetsFactory">
+        <property name="propertyPrefix" value="visitor"/>
         <property name="targetType">
             <value type="java.lang.Class">com.mylab.embot.entity.Visitor</value>
         </property>
         <property name="properties">
-            <util:properties location="classpath:properties/visitors.properties" />
+            <util:properties location="classpath:properties/visitors.properties"/>
         </property>
     </bean>
 
