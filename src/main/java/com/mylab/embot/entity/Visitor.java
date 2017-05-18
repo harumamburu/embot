@@ -1,6 +1,6 @@
 package com.mylab.embot.entity;
 
-public class User {
+public class Visitor {
 
     private String name;
     private String lastName;
@@ -9,7 +9,10 @@ public class User {
     private String passId;
     private Representation representation;
 
-    public User(String name, String lastName, String email, String passId, Representation representation) {
+    public Visitor() {
+    }
+
+    public Visitor(String name, String lastName, String email, String passId, Representation representation) {
         this.name = name;
         this.lastName = lastName;
         this.email = email;
@@ -67,7 +70,7 @@ public class User {
 
     @Override
     public String toString() {
-        return "User{" +
+        return "Visitor{" +
                 "name='" + name + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", phoneNumber='" + phoneNumber + '\'' +
@@ -75,5 +78,20 @@ public class User {
                 ", passId='" + passId + '\'' +
                 ", representation=" + representation +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Visitor visitor = (Visitor) o;
+
+        return passId.equals(visitor.passId);
+    }
+
+    @Override
+    public int hashCode() {
+        return passId.hashCode();
     }
 }

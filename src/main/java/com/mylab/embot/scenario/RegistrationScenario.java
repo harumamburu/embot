@@ -1,7 +1,7 @@
 package com.mylab.embot.scenario;
 
 import com.mylab.embot.driver.CustomChromeDriver;
-import com.mylab.embot.entity.User;
+import com.mylab.embot.entity.Visitor;
 import com.mylab.embot.page.MainPage;
 import com.mylab.embot.page.RegisterPage;
 import com.mylab.embot.skype.SkypeClient;
@@ -26,9 +26,9 @@ public class RegistrationScenario implements Scenario {
     @Value("scenario.entrypoint.address")
     private String mainPageAddress;
 
-    private Set<User> visitors;
+    private Set<Visitor> visitors;
 
-    public RegistrationScenario(Set<User> visitors) {
+    public RegistrationScenario(Set<Visitor> visitors) {
         this.visitors = visitors;
     }
 
@@ -46,8 +46,6 @@ public class RegistrationScenario implements Scenario {
 
         }
     }
-
-
 
     @PostConstruct
     public void connectSkype() {

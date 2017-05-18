@@ -1,7 +1,7 @@
 package com.mylab.embot.page;
 
 import com.mylab.embot.driver.CustomChromeDriver;
-import com.mylab.embot.entity.User;
+import com.mylab.embot.entity.Visitor;
 import com.mylab.embot.page.element.Calendar;
 import com.mylab.embot.page.element.VisitorForm;
 import org.openqa.selenium.support.FindBy;
@@ -68,7 +68,7 @@ public class RegisterPage extends Page {
         return calendar.getAvailableDayText();
     }
 
-    public void registerVisitors(Set<User> visitors) {
+    public void registerVisitors(Set<Visitor> visitors) {
         fillInEmbInfo(visitors.size());
         dateInput.getWrappedElement().click();
 
