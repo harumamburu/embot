@@ -28,10 +28,10 @@ public class RegistrationScenario implements Scenario {
     @Value("${skype.group.name}")
     private String slotsTopic;
 
-    @Value("scenario.entrypoint.address")
+    @Value("${scenario.entrypoint.address}")
     private String mainPageAddress;
 
-    @Value("${scenario.response.timeout}")
+    @Value("${scenario.response.timeout.seconds}")
     private long waitSecondsForResponce;
 
     private final Set<Visitor> visitors;
@@ -61,15 +61,14 @@ public class RegistrationScenario implements Scenario {
         }
     }
 
+    /*@PostConstruct
+    public void setDriverWaits() {
+        driver.setImplicitWait(waitSecondsForResponce, TimeUnit.SECONDS);
+    }*/
+
     @PostConstruct
     public void connectSkype() {
         skypeClient.connectSkype();
-    }
-
-    @PostConstruct
-    public void setDriverWaits() {
-        driver.setImplicitWait(10, TimeUnit.SECONDS);
-        driver.setPageLoadTimeout(10, TimeUnit.SECONDS);
     }
 
     @PreDestroy
