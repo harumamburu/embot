@@ -8,6 +8,10 @@
     <artifactId>embot</artifactId>
     <version>1.0-SNAPSHOT</version>
 
+    <properties>
+        <version.log4j2>2.8.2</version.log4j2>
+    </properties>
+
     <dependencies>
         <dependency>
             <groupId>org.springframework</groupId>
@@ -34,6 +38,16 @@
             <groupId>fr.delthas</groupId>
             <artifactId>javaskype</artifactId>
             <version>1.0.20</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-api</artifactId>
+            <version>${version.log4j2}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-core</artifactId>
+            <version>${version.log4j2}</version>
         </dependency>
     </dependencies>
 

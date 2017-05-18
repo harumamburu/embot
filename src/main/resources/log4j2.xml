@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="info" name="myLoggingConfig">
+    <Filter type="ThresholdFilter" level="debug"/>
+
+    <Appenders>
+        <File name="File" fileName="logfile.log">
+            <PatternLayout>
+                <Pattern>%d{MM/dd/yy HH:mm:ss.SSS} %-5p: %msg%n</Pattern>
+            </PatternLayout>
+        </File>
+    </Appenders>
+
+    <Loggers>
+        <Root level="debug">
+            <AppenderRef ref="File"/>
+        </Root>
+    </Loggers>
+
+</Configuration>
