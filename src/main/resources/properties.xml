@@ -28,4 +28,14 @@
         </property>
     </bean>
 
+    <bean id="visitorsFactory" class="com.mylab.embot.config.PropertiesBindingBeanSetsFactory">
+        <property name="propertyPrefix" value="visitor" />
+        <property name="targetType">
+            <value type="java.lang.Class">com.mylab.embot.entity.Visitor</value>
+        </property>
+        <property name="properties">
+            <util:properties location="classpath:properties/visitors.properties" />
+        </property>
+    </bean>
+
 </beans>
