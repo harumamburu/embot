@@ -42,13 +42,13 @@ public class RegisterPage extends Page {
 
     private List<VisitorForm> visitorForms;
 
-    @Value("@{scenario.registerpage.select.purpose.value:6}")
+    @Value("${scenario.registerpage.select.purpose.value:6}")
     private String visitPurposeSelectValue;
 
-    @Value("@{scenario.registerpage.select.emb.value:3}")
+    @Value("${scenario.registerpage.select.emb.value:3}")
     private String embSelectValue;
 
-    @Value("@{scenario.registerpage.select.time.value:16}")
+    @Value("${scenario.registerpage.select.time.value:16}")
     private String timeSelectValue;
 
     private boolean filledIn;
