@@ -1,6 +1,5 @@
 package com.mylab.embot.skype;
 
-import fr.delthas.skype.Group;
 import fr.delthas.skype.Presence;
 import fr.delthas.skype.Skype;
 

@@ -20,7 +20,7 @@ public class RegistrationScenario implements Scenario {
     @Autowired
     private SkypeClient skypeClient;
 
-    @Value("${skype.group.name:SlotsNotifications}")
+    @Value("${skype.group.name}")
     private String slotsTopic;
 
     @Value("scenario.entrypoint.address")
