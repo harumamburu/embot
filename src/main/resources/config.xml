@@ -14,7 +14,9 @@
     <import resource="properties.xml"/>
 
     <bean id="options" class="com.mylab.embot.driver.ChromeOptions" p:arguments="start-maximized"/>
-    <bean id="driver" class="com.mylab.embot.driver.CustomChromeDriver" c:options-ref="options" />
+    <bean id="driver" class="com.mylab.embot.driver.CustomChromeDriver" c:options-ref="options"/>
+
+    <bean id="skypeClient" class="com.mylab.embot.skype.SkypeClient" c:username="grimlakr" c:password="He666LL"/>
 
     <bean id="main" class="com.mylab.embot.Main"/>
 

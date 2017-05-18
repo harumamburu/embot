@@ -30,6 +30,11 @@
                 </exclusion>
             </exclusions>
         </dependency>
+        <dependency>
+            <groupId>fr.delthas</groupId>
+            <artifactId>javaskype</artifactId>
+            <version>1.0.20</version>
+        </dependency>
     </dependencies>
 
     <build>
