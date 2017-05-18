@@ -5,6 +5,8 @@ import com.mylab.embot.entity.Visitor;
 import com.mylab.embot.page.MainPage;
 import com.mylab.embot.page.RegisterPage;
 import com.mylab.embot.skype.SkypeClient;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 
@@ -13,6 +15,8 @@ import javax.annotation.PreDestroy;
 import java.util.Set;
 
 public class RegistrationScenario implements Scenario {
+
+    private static final Logger LOGGER = LogManager.getLogger(RegistrationScenario.class.getName());
 
     @Autowired
     private CustomChromeDriver driver;
@@ -34,16 +38,21 @@ public class RegistrationScenario implements Scenario {
 
     @Override
     public void run() {
-        driver.get(mainPageAddress);
+        try {
+            driver.get(mainPageAddress);
 
-        RegisterPage page = new MainPage(driver).register().proceedToRegistration();
+            RegisterPage page = new MainPage(driver).register().proceedToRegistration();
 
-        String slotsDay = page.getAvailableSlotDay(visitors.size());
-        if(slotsDay != null) {
-            skypeClient.sendGroupNotification(slotsTopic, "Slots available for " + slotsDay + "!!");
-            page.registerVisitors(visitors);
-        } else {
-
+            String slotsDay = page.getAvailableSlotDay(visitors.size());
+            if(slotsDay != null) {
+                skypeClient.sendGroupNotification(slotsTopic, "Slots available for " + slotsDay + "!!");
+                LOGGER.info("Found slots!! Registering visitors");
+                page.registerVisitors(visitors);
+            } else {
+                LOGGER.info("Didn't find any slots...");
+            }
+        } catch (Exception e) {
+            LOGGER.error("An error occurred during slots checking", e);
         }
     }
 

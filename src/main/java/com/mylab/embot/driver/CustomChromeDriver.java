@@ -1,6 +1,8 @@
 package com.mylab.embot.driver;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.springframework.beans.factory.annotation.Value;
@@ -13,6 +15,8 @@ import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
 public class CustomChromeDriver extends ChromeDriver {
+
+    private static final Logger LOGGER = LogManager.getLogger(CustomChromeDriver.class.getName());
 
     @Value("${driver.reload.attempts:3}")
     private int attemptsToLoad;
@@ -81,8 +85,7 @@ public class CustomChromeDriver extends ChromeDriver {
             FileUtils.copyFile(getScreenshotAs(OutputType.FILE),
                     new File(String.format("./screenshots/%1$tm.%1$td.%1$ty_%1$tH-%1$tM-%1$tS.png", new Date())));
         } catch (IOException e) {
-            // TODO replace with logging
-            e.printStackTrace();
+            LOGGER.error("Failed to make a screenshot", e);
         }
     }
 
