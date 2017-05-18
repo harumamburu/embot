@@ -1,10 +1,14 @@
 package com.mylab.embot.driver;
 
+import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.springframework.beans.factory.annotation.Value;
 
 import javax.annotation.PreDestroy;
+import java.io.File;
+import java.io.IOException;
+import java.util.Date;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
@@ -70,6 +74,16 @@ public class CustomChromeDriver extends ChromeDriver {
         }
         throw new NoSuchElementException(
                 String.format("Wasn't able to find %s in %d attempts", by.toString(), attemptsToLoad));
+    }
+
+    public void getScreenshot() {
+        try {
+            FileUtils.copyFile(getScreenshotAs(OutputType.FILE),
+                    new File(String.format("./screenshots/%1$tm.%1$td.%1$ty_%1$tH-%1$tM-%1$tS.png", new Date())));
+        } catch (IOException e) {
+            // TODO replace with logging
+            e.printStackTrace();
+        }
     }
 
     public void setPageLoadTimeout(long value, TimeUnit timeUnit) {
