@@ -22,4 +22,8 @@
 
     <bean id="registrationScenario" class="com.mylab.embot.scenario.RegistrationScenario" c:visitors-ref="visitors"/>
 
+    <bean id="runner" class="#{ systemProperties['isDaemon'] != null &amp;&amp; systemProperties['isDaemon'].equals('true')
+                                ? 'com.mylab.embot.runner.AsDaemonRunner'
+                                : 'com.mylab.embot.runner.AsProgramRunner' }"/>
+
 </beans>

@@ -1,25 +1,29 @@
 package com.mylab.embot.runner;
 
-import com.mylab.embot.scenario.RegistrationScenario;
 import com.mylab.embot.scenario.Scenario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+import java.util.Optional;
 
 public abstract class AbstractRunner {
 
     @Autowired
     protected Scenario registrationScenario;
 
-    private static ConfigurableApplicationContext context;
+    public static void main(String[] args) {
+        ConfigurableApplicationContext context = null;
+        try {
+            context = new ClassPathXmlApplicationContext("config.xml");
+            context.registerShutdownHook();
 
-    protected static Scenario getRegistrationScenarioFromContext() {
-        context = new ClassPathXmlApplicationContext("config.xml");
-        context.registerShutdownHook();
-        return context.getBean("registrationScenario", RegistrationScenario.class);
+
+            context.getBean("runner", AbstractRunner.class).runScenario();
+        } finally {
+            Optional.ofNullable(context).ifPresent(cont -> cont.close());
+        }
     }
 
-    protected static void closeSpringContext() {
-        context.close();
-    }
+    protected abstract void runScenario();
 }
