@@ -59,6 +59,7 @@ public class RegisterPage extends Page {
 
     private void fillInEmbInfo(int numberOfVisitors) {
         if (!filledIn) {
+            driver.waitForVisibilityOf(visitPurposeSelect);
             visitPurposeSelect.selectByValue(visitPurposeSelectValue);
             embSelect.selectByValue(embSelectValue);
             numberOfVisitorsSelect.selectByValue(String.valueOf(numberOfVisitors));

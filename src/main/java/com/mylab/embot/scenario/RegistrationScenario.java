@@ -13,7 +13,6 @@ import org.springframework.beans.factory.annotation.Value;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import java.util.Set;
-import java.util.concurrent.TimeUnit;
 
 public class RegistrationScenario implements Scenario {
 
@@ -61,10 +60,10 @@ public class RegistrationScenario implements Scenario {
         }
     }
 
-    /*@PostConstruct
+    @PostConstruct
     public void setDriverWaits() {
-        driver.setImplicitWait(waitSecondsForResponce, TimeUnit.SECONDS);
-    }*/
+        driver.setElementWaitTimeoutSeconds(waitSecondsForResponce);
+    }
 
     @PostConstruct
     public void connectSkype() {

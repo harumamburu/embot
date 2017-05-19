@@ -14,6 +14,7 @@ public class MainPage extends Page {
     }
 
     public PreRegistrationPage register() {
+        driver.waitForVisibilityOf(preRegistrationPageLink);
         preRegistrationPageLink.click();
         return new PreRegistrationPage(driver);
     }

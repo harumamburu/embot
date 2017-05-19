@@ -14,6 +14,7 @@ public class PreRegistrationPage extends Page {
     }
 
     public RegisterPage proceedToRegistration() {
+        driver.waitForVisibilityOf(registrationPageLink);
         registrationPageLink.click();
         return new RegisterPage(driver);
     }

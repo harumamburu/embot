@@ -5,6 +5,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.springframework.beans.factory.annotation.Value;
 
 import javax.annotation.PreDestroy;
@@ -23,6 +25,7 @@ public class CustomChromeDriver extends ChromeDriver {
 
     @Value("${driver.chrome.emptypage.address:chrome://newtab}")
     private String emptyPageAddress;
+    private long elementWaitTimeoutSeconds = 6;
 
     public CustomChromeDriver() {
     }
@@ -33,6 +36,14 @@ public class CustomChromeDriver extends ChromeDriver {
 
     public CustomChromeDriver(ChromeOptions options) {
         super(options);
+    }
+
+    public long getElementWaitTimeoutSeconds() {
+        return elementWaitTimeoutSeconds;
+    }
+
+    public void setElementWaitTimeoutSeconds(long elementWaitTimeoutSeconds) {
+        this.elementWaitTimeoutSeconds = elementWaitTimeoutSeconds;
     }
 
     @Override
@@ -62,24 +73,6 @@ public class CustomChromeDriver extends ChromeDriver {
                 String.format("Wasn't able to load {%s} in %d attempts", url, attemptsToLoad)));
     }
 
-    @Override
-    public WebElement findElement(By by) {
-        return findElement(by, 1);
-    }
-
-    private WebElement findElement(By by, int attempt) {
-        while (attempt <= attemptsToLoad) {
-            try {
-                return super.findElement(by);
-            } catch (NoSuchElementException e) {
-                navigate().refresh();
-                return findElement(by, ++attempt);
-            }
-        }
-        throw new NoSuchElementException(
-                String.format("Wasn't able to find %s in %d attempts", by.toString(), attemptsToLoad));
-    }
-
     public void getScreenshot() {
         try {
             FileUtils.copyFile(getScreenshotAs(OutputType.FILE),
@@ -93,8 +86,22 @@ public class CustomChromeDriver extends ChromeDriver {
         manage().timeouts().pageLoadTimeout(value, timeUnit);
     }
 
-    public void setImplicitWait(long value, TimeUnit timeUnit) {
-        manage().timeouts().implicitlyWait(value, timeUnit);
+    public void waitForVisibilityOf(WebElement element) {
+        waitForVisibilityOf(element, 1);
+    }
+
+    public void waitForVisibilityOf(WebElement element, int attempt) {
+        while (attempt <= attemptsToLoad) {
+            try {
+                new WebDriverWait(this, elementWaitTimeoutSeconds).until(ExpectedConditions.visibilityOf(element));
+            } catch (Exception e) {
+                navigate().refresh();
+                waitForVisibilityOf(element, ++attempt);
+            }
+        }
+        throw new NoSuchElementException(
+                String.format("Wasn't able to find %s in %d %d sec attempts",
+                        element.toString(), elementWaitTimeoutSeconds, attemptsToLoad));
     }
 
     @PreDestroy
