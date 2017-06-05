@@ -5,11 +5,17 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.FactoryBean;
 
+import javax.swing.*;
 import java.beans.PropertyDescriptor;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
-import java.util.TreeSet;
+import java.util.function.Function;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.groupingBy;
 
 public class PropertiesBindingBeanSetsFactory<T> implements FactoryBean<Set<T>> {
 
@@ -54,60 +60,26 @@ public class PropertiesBindingBeanSetsFactory<T> implements FactoryBean<Set<T>> 
 
     @Override
     public Set<T> getObject() throws Exception {
-        Set<T> loadedBeans = new HashSet<>();
-        int lastIndex = -1;
+        Function<Map.Entry<Object, Object>, Integer> mapClassifier =
+                entry -> Integer.valueOf(StringUtils.substringBetween((String) entry.getKey(), ".", "."));
 
-        T item = null;
+        Collector<Map.Entry<Object, Object>, ?, Map<String, Object>> mapCollector = Collectors.toMap(
+                entry -> StringUtils.substringAfterLast((String) entry.getKey(), "."),
+                Map.Entry::getValue);
 
-        for (String property: prefixFilteredProperties()) {
-            // Actual value
-            final String propertyValue = properties.getProperty(property);
+        Map<Integer, Map<String, Object>> beansMap =
+                properties.entrySet().stream()
+                        .filter(entry -> ((String) entry.getKey()).contains(propertyPrefix))
+                        .collect(groupingBy(mapClassifier, mapCollector));
 
-            // Remove Prefix
-            property = StringUtils.substringAfter(property, propertyPrefix + ".");
-
-            // Split by "."
-            String tokens[] = property.split("\\.");
-
-            if (tokens.length != 2) {
-                throw new IllegalArgumentException("Each list property must be in form of: <prefix>.<index>.<property name>");
-            }
-
-            final int index = Integer.valueOf(tokens[0]);
-            final String propertyName = tokens[1];
-
-            // New index
-            if (lastIndex != index) {
-                if (lastIndex != -1) {
-                    loadedBeans.add(item);
-                }
-                lastIndex = index;
-
-                item = targetType.newInstance();
-            }
-
-            // Set the property
-            setProperty(item, propertyName, convertIfNecessary(propertyName, propertyValue));
+        Set<T> beansSet = new HashSet<>();
+        for(Map<String, Object> beanDefinition : beansMap.values()) {
+            T item = targetType.newInstance();
+            populateBeanFromMap(item, beanDefinition);
+            beansSet.add(item);
         }
 
-        // Add last item
-        if (lastIndex != -1) {
-            loadedBeans.add(item);
-        }
-
-        return loadedBeans;
-    }
-
-    private Set<String> prefixFilteredProperties() {
-        Set<String> filteredProperties = new TreeSet<>();
-
-        for (String propertyName: properties.stringPropertyNames()) {
-            if (propertyName.startsWith(this.propertyPrefix)) {
-                filteredProperties.add(propertyName);
-            }
-        }
-
-        return filteredProperties;
+        return beansSet;
     }
 
     /**
@@ -128,8 +100,16 @@ public class PropertiesBindingBeanSetsFactory<T> implements FactoryBean<Set<T>> 
         return propertyType.getDeclaredMethod("valueOf", String.class).invoke(propertyType, propertyValue);
     }
 
-    private static void setProperty(Object item, String propertyName, Object value) throws Exception {
-        PropertyDescriptor descriptor = BeanUtils.getPropertyDescriptor(item.getClass(), propertyName);
-        descriptor.getWriteMethod().invoke(item, value);
+    private void populateBeanFromMap(Object item, Map<String, Object> params) {
+        params.entrySet().stream()
+                .forEach(entry -> {
+                    try {
+                        Object value = convertIfNecessary(entry.getKey(), String.valueOf(entry.getValue()));
+                        PropertyDescriptor descriptor = BeanUtils.getPropertyDescriptor(item.getClass(), entry.getKey());
+                        descriptor.getWriteMethod().invoke(item, value);
+                    } catch (Exception e) {
+                        throw new RuntimeException(e);
+                    }
+                });
     }
 }
