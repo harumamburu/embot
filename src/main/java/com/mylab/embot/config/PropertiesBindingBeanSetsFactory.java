@@ -5,7 +5,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.FactoryBean;
 
-import javax.swing.*;
 import java.beans.PropertyDescriptor;
 import java.util.HashSet;
 import java.util.Map;
@@ -101,8 +100,8 @@ public class PropertiesBindingBeanSetsFactory<T> implements FactoryBean<Set<T>> 
     }
 
     private void populateBeanFromMap(Object item, Map<String, Object> params) {
-        params.entrySet().stream()
-                .forEach(entry -> {
+        params.entrySet().forEach(
+                entry -> {
                     try {
                         Object value = convertIfNecessary(entry.getKey(), String.valueOf(entry.getValue()));
                         PropertyDescriptor descriptor = BeanUtils.getPropertyDescriptor(item.getClass(), entry.getKey());
